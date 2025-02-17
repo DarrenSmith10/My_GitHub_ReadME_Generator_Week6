@@ -6,6 +6,10 @@ import time
 import markdown as md
 import numGenerator as ng
 import os
+import sys
+from prettytable import PrettyTable
+from prettytable import TableStyle
+
 
 
 console = Console()
@@ -60,15 +64,23 @@ with Progress() as progress:
 console.print("[bold green]Task Complete![/bold green] ✅")
 
 # Create a table using Rich
-table = Table(title="GitHub Readme Generator")
+# table = Table(title="GitHub Readme Generator")
 
-table.add_column("Info", justify="center", style="cyan", no_wrap=True)
-table.add_column("Result", justify="left", style="magenta")
+# table.add_column("Info", justify="center", style="cyan", no_wrap=True)
+# table.add_column("Result", justify="centre", style="magenta")
 
-for key,values in Entry_dict.items():
-    table.add_row(key, values)
+# for key,values in Entry_dict.items():
+#     table.add_row(key, values)
 
-console.print(table)
+# console.print(table)
+
+table = PrettyTable()
+table.set_style(TableStyle.MARKDOWN)
+table.field_names = ["Info","Result"]
+for key, value in Entry_dict.items():
+     table.add_row([key, value])
+
+print(table)
 
 # check if md file exists
 if os.path.exists("readmetest3.md"):
@@ -80,12 +92,19 @@ else:
 
 with open('readmetest3.md', 'ab+') as f:
 
-    for key, value in Entry_dict.items():
-        f.write(f'{key}\n'.encode())
-        f.write(f'{value}\n'.encode())
-
+    # for key, value in Entry_dict.items():
+    #     f.write(f'{key}\n'.encode())
+    #     f.write(f'{value}\n'.encode())
+    f.write(f'{table}\n'.encode())
     # f.write('## Matrix Table\n'.encode())
     # f.write('```table\n'.encode())
 
 
 md.markdownFromFile(input=open("readmetest3.md", "rb"), output=open("out.html", "wb"))
+
+
+original_stdout = sys.stdout
+
+# Redirect stdout to a file
+with open('output.txt', 'w') as w:
+    w.write(table.get_string())

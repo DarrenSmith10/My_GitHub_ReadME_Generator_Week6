@@ -3,3 +3,4 @@ InquirerPy
 markdown
 numpy
 py-markdown-table
+prettytable
