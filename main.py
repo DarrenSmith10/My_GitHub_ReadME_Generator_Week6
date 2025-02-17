@@ -96,7 +96,7 @@ with open('readmetest3.md', 'ab+') as f:
     #     f.write(f'{key}\n'.encode())
     #     f.write(f'{value}\n'.encode())
     f.write(f'{table}\n'.encode())
-    # f.write('## Matrix Table\n'.encode())
+    # f.write('## $\textcolor{yellow} {Matrix\ Table}$\n'.encode())
     # f.write('```table\n'.encode())
 
 
