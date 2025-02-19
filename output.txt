@@ -1,8 +1,0 @@
-|              Info              |                           Result                          |
-| :----------------------------: | :-------------------------------------------------------: |
-|       ## Project Title:        |        Week 6 Readme Generator in Python Challenge        |
-|    ## Project Description:     | Useful tool to generate readme.md files for a GitHub Repo |
-| ## Installation Instructions:  |                   clone the code locally                  |
-|    ## Usage Instructions:      |                       python main.py                      |
-|       ## Chose a License       |                        MIT License                        |
-|   ## Author / Contact Info:    |                 darrensmith@daksmith.co.uk                |

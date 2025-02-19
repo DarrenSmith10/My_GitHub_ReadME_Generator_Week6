@@ -1,18 +1,22 @@
+# Pip dependancies
 from InquirerPy import prompt
 from rich.console import Console
 from rich.table import Table
 from rich.progress import Progress
 import time
 import markdown as md
-import numGenerator as ng
-import os
-import sys
 from prettytable import PrettyTable
 from prettytable import TableStyle
-
+import os
+import sys
+import numpy as np
+# My imports
+import fileUlti as fu
 
 
 console = Console()
+
+# Using Inquirepy to create some questions to ask the user
 questions = [
     {"type" : "input" , "name" : "title" , "message" : "Project Title"},
     {"type" : "input" , "name" : "description" , "message" : "Project Description"},
@@ -38,7 +42,7 @@ questions = [
 answers = prompt(questions)
 # print(answers)
 
-# take the dictionaries key and assign it to a variable
+# Take some elements out of user 's answers array store them into variables.
 title = answers["title"]
 description = answers["description"]
 installation = answers["installation"]
@@ -46,13 +50,10 @@ usage = answers["usage"]
 license = answers["license"]
 author = answers["author"]
 
-
+# take the dictionaries keys, values and assign them to some variables
 Entry_dict = { "## Project Title: ": title, "## Project Description: ": description, "## Installation Instructions: ": installation, "## Usage Instructions: ": usage, "## Chose a License": license, "## Author / Contact Info: ": author}
-# x = Entry_dict.keys()
-# y = Entry_dict.values()
-# print(x)
-# print(y)
-# print the variables test
+x = str(Entry_dict.keys())
+y = str(Entry_dict.values())
 
 # Show a progress bar
 with Progress() as progress:
@@ -63,48 +64,43 @@ with Progress() as progress:
 
 console.print("[bold green]Task Complete![/bold green] ✅")
 
-# Create a table using Rich
-# table = Table(title="GitHub Readme Generator")
-
-# table.add_column("Info", justify="center", style="cyan", no_wrap=True)
-# table.add_column("Result", justify="centre", style="magenta")
-
-# for key,values in Entry_dict.items():
-#     table.add_row(key, values)
-
-# console.print(table)
-
+# Random Matrix table
+matrix = np.random.randint(10, size=(3, 3))
 table = PrettyTable()
 table.set_style(TableStyle.MARKDOWN)
-table.field_names = ["Info","Result"]
-for key, value in Entry_dict.items():
-     table.add_row([key, value])
+for i in range (3):
+    table.add_row([matrix[i]])
+table.header = False
+# print(table)
 
-print(table)
+# check if files exists
+fu.filecheck_md()
+fu.filecheck_txt()
 
-# check if md file exists
-if os.path.exists("readmetest3.md"):
-  os.remove("readmetest3.md")
-else:
-  print("The file does not exist")
+# write the output to a markdown file
 
-# now assign the variables to a markdown file
+with open('GithubReadme.md', 'ab+') as f:
 
-with open('readmetest3.md', 'ab+') as f:
-
-    # for key, value in Entry_dict.items():
-    #     f.write(f'{key}\n'.encode())
-    #     f.write(f'{value}\n'.encode())
+    for key, value in Entry_dict.items():
+        f.write(f'{key}\n'.encode())
+        f.write(f'{value}\n'.encode())
+    
+    f.write('## Random Matrix \n'.encode())
     f.write(f'{table}\n'.encode())
-    # f.write('## $\textcolor{yellow} {Matrix\ Table}$\n'.encode())
-    # f.write('```table\n'.encode())
+    
+
+print("Markdown File created successfully. Well done check out this cool random matrix table below")
 
 
-md.markdownFromFile(input=open("readmetest3.md", "rb"), output=open("out.html", "wb"))
+md.markdownFromFile(input=open("GithubReadme.md", "rb"), output=open("out.html", "wb"))
 
+# write the output to a txt file
+with open('GithubReadme.txt', 'w') as w:
+    # w.write(table.get_string())
 
-original_stdout = sys.stdout
-
-# Redirect stdout to a file
-with open('output.txt', 'w') as w:
-    w.write(table.get_string())
+    for key, value in Entry_dict.items():
+        w.write(f'{key}\n')
+        w.write(f'{value}\n')
+    w.write(f'{table}\n')
+print("Txt file created successfully")
+        
