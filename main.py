@@ -79,7 +79,7 @@ fu.filecheck_txt()
 
 # write the output to a markdown file
 
-with open('GithubReadme.md', 'ab+') as f:
+with open('readme.md', 'ab+') as f:
 
     for key, value in Entry_dict.items():
         f.write(f'{key}\n'.encode())
@@ -92,10 +92,10 @@ with open('GithubReadme.md', 'ab+') as f:
 print("Markdown File created successfully. Well done check out this cool random matrix table below")
 
 
-md.markdownFromFile(input=open("GithubReadme.md", "rb"), output=open("out.html", "wb"))
+md.markdownFromFile(input=open("readme.md", "rb"), output=open("out.html", "wb"))
 
 # write the output to a txt file
-with open('GithubReadme.txt', 'w') as w:
+with open('readme.txt', 'w') as w:
     # w.write(table.get_string())
 
     for key, value in Entry_dict.items():
